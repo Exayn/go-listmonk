@@ -11,17 +11,14 @@ import (
 	"strings"
 )
 
-type params map[string]interface{}
-
 // request define an API request
 type request struct {
-	method     string
-	endpoint   string
-	query      url.Values
-	form       url.Values
-	recvWindow int64
-	header     http.Header
-	body       io.Reader
+	method   string
+	endpoint string
+	query    url.Values
+	form     url.Values
+	header   http.Header
+	body     io.Reader
 }
 
 // addParam add param with key/value to query string
@@ -51,9 +48,16 @@ func (r *request) setParam(key string, value interface{}) *request {
 }
 
 // setParams set params with key/values to query string
-func (r *request) setParams(m params) *request {
-	for k, v := range m {
-		r.setParam(k, v)
+func (r *request) setParams(m map[string]interface{}) *request {
+	for key, value := range m {
+		r.setParam(key, value)
+	}
+	return r
+}
+
+func (r *request) setParamList(baseParam string, params ...interface{}) *request {
+	for index, value := range params {
+		r.setParam(fmt.Sprintf("%s[%d]", baseParam, index), value)
 	}
 	return r
 }
@@ -68,9 +72,9 @@ func (r *request) setFormParam(key string, value interface{}) *request {
 }
 
 // setFormParams set params with key/values to request form body
-func (r *request) setFormParams(m params) *request {
-	for k, v := range m {
-		r.setFormParam(k, v)
+func (r *request) setFormParams(m map[string]interface{}) *request {
+	for key, value := range m {
+		r.setFormParam(key, value)
 	}
 	return r
 }
@@ -85,7 +89,7 @@ func (r *request) validate() (err error) {
 	return nil
 }
 
-func (r *request) toHttpRequest(baseUrl string, ctx context.Context, opts ...RequestOption) (req *http.Request, err error) {
+func (r *request) toHttpRequest(baseUrl string, ctx context.Context, opts ...requestOption) (req *http.Request, err error) {
 	err = r.validate()
 	if err != nil {
 		return nil, err
@@ -118,10 +122,10 @@ func (r *request) toHttpRequest(baseUrl string, ctx context.Context, opts ...Req
 }
 
 // RequestOption define option type for request
-type RequestOption func(*request)
+type requestOption func(*request)
 
 // WithHeader set or add a header value to the request
-func WithHeader(key, value string, replace bool) RequestOption {
+func WithHeader(key, value string, replace bool) requestOption {
 	return func(r *request) {
 		if r.header == nil {
 			r.header = http.Header{}
@@ -135,7 +139,7 @@ func WithHeader(key, value string, replace bool) RequestOption {
 }
 
 // WithHeaders set or replace the headers of the request
-func WithHeaders(header http.Header) RequestOption {
+func WithHeaders(header http.Header) requestOption {
 	return func(r *request) {
 		r.header = header.Clone()
 	}

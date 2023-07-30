@@ -7,7 +7,12 @@ import (
 	"net/http"
 )
 
+type ClientInterface interface {
+	callAPI(ctx context.Context, r *request, opts ...requestOption) ([]byte, error)
+}
+
 type Client struct {
+	ClientInterface
 	baseURL    string
 	httpClient *http.Client
 }
@@ -26,7 +31,7 @@ func NewClientWithCustomHTTPClient(baseURL string, httpClient *http.Client) *Cli
 	}
 }
 
-func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) ([]byte, error) {
+func (c *Client) callAPI(ctx context.Context, r *request, opts ...requestOption) ([]byte, error) {
 	req, err := r.toHttpRequest(c.baseURL, ctx, opts...)
 
 	if err != nil {
@@ -64,8 +69,14 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 	return data, nil
 }
 
-func (c *Client) NewGetSubscriberListService() *GetSubscriberListService {
-	return &GetSubscriberListService{
+func (c *Client) NewGetSubscribersService() *GetSubscribersService {
+	return &GetSubscribersService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetSubscriberService() *GetSubscriberService {
+	return &GetSubscriberService{
 		c: c,
 	}
 }
