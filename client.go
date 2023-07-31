@@ -146,3 +146,15 @@ func (c *Client) NewCreateListService() *CreateListService {
 		c: c,
 	}
 }
+
+func (c *Client) NewUpdateListService() *UpdateListService {
+	return &UpdateListService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteListService() *DeleteListService {
+	return &DeleteListService{
+		c: c,
+	}
+}
