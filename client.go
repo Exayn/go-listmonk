@@ -80,3 +80,69 @@ func (c *Client) NewGetSubscriberService() *GetSubscriberService {
 		c: c,
 	}
 }
+
+func (c *Client) NewCreateSubscriberService() *CreateSubscriberService {
+	return &CreateSubscriberService{
+		c: c,
+	}
+}
+
+func (c *Client) NewUpdateSubscribersListsService() *UpdateSubscribersListsService {
+	return &UpdateSubscribersListsService{
+		c: c,
+	}
+}
+
+func (c *Client) NewUpdateSubscriberService() *UpdateSubscriberService {
+	return &UpdateSubscriberService{
+		c: c,
+	}
+}
+
+func (c *Client) NewBlocklistsSubscriberService() *BlocklistsSubscriberService {
+	return &BlocklistsSubscriberService{
+		c: c,
+	}
+}
+
+func (c *Client) NewBlocklistsQuerySubscriberService() *BlocklistsQuerySubscriberService {
+	return &BlocklistsQuerySubscriberService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteSubscriberService() *DeleteSubscriberService {
+	return &DeleteSubscriberService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteSubscribersService() *DeleteSubscribersService {
+	return &DeleteSubscribersService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteSubscribersQueryService() *DeleteSubscribersQueryService {
+	return &DeleteSubscribersQueryService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetListsService() *GetListsService {
+	return &GetListsService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetListService() *GetListService {
+	return &GetListService{
+		c: c,
+	}
+}
+
+func (c *Client) NewCreateListService() *CreateListService {
+	return &CreateListService{
+		c: c,
+	}
+}

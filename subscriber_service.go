@@ -277,16 +277,14 @@ func (s *UpdateSubscribersListsService) Do(ctx context.Context, opts ...requestO
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
 
 type UpdateSubscriberService struct {
@@ -406,16 +404,14 @@ func (s *BlocklistsSubscriberService) Do(ctx context.Context, opts ...requestOpt
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
 
 type BlocklistsQuerySubscriberService struct {
@@ -442,16 +438,14 @@ func (s *BlocklistsQuerySubscriberService) Do(ctx context.Context, opts ...reque
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
 
 type DeleteSubscriberService struct {
@@ -476,16 +470,14 @@ func (s *DeleteSubscriberService) Do(ctx context.Context, opts ...requestOption)
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
 
 type DeleteSubscribersService struct {
@@ -512,16 +504,14 @@ func (s *DeleteSubscribersService) Do(ctx context.Context, opts ...requestOption
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
 
 type DeleteSubscribersQueryService struct {
@@ -548,14 +538,12 @@ func (s *DeleteSubscribersQueryService) Do(ctx context.Context, opts ...requestO
 		return nil, err
 	}
 
-	var res map[string]bool
+	var res map[string]*bool
 	err = json.Unmarshal(bytes, &res)
 
 	if err != nil {
 		return nil, err
 	}
 
-	finalResult := res["data"]
-
-	return &finalResult, nil
+	return res["data"], nil
 }
