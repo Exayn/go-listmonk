@@ -10,7 +10,7 @@ type mockClient struct {
 	mock.Mock
 }
 
-func newMockClient(mockResponse []byte) ClientInterface {
+func newMockClient(mockResponse []byte) *mockClient {
 	client := new(mockClient)
 	client.On("callAPI", mock.Anything, mock.Anything, mock.Anything).Return(mockResponse, nil)
 	return client

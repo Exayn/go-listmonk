@@ -158,3 +158,33 @@ func (c *Client) NewDeleteListService() *DeleteListService {
 		c: c,
 	}
 }
+
+func (c *Client) NewGetCampaignsService() *GetCampaignsService {
+	return &GetCampaignsService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetCampaignService() *GetCampaignService {
+	return &GetCampaignService{
+		c: c,
+	}
+}
+
+func (c *Client) NewCreateCampaignService() *CreateCampaignService {
+	return &CreateCampaignService{
+		c: c,
+	}
+}
+
+func (c *Client) NewUpdateCampaignStatusService() *UpdateCampaignStatusService {
+	return &UpdateCampaignStatusService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteCampaignService() *DeleteCampaignService {
+	return &DeleteCampaignService{
+		c: c,
+	}
+}

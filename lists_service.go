@@ -54,7 +54,7 @@ func (s *GetListsService) PerPage(perPage string) *GetListsService {
 	return s
 }
 
-func (s *GetListsService) Do(ctx context.Context) ([]*List, error) {
+func (s *GetListsService) Do(ctx context.Context, opts ...requestOption) ([]*List, error) {
 	r := &request{
 		method:   http.MethodGet,
 		endpoint: "/lists",
@@ -80,7 +80,7 @@ func (s *GetListsService) Do(ctx context.Context) ([]*List, error) {
 		r.setParam("per_page", *s.perPage)
 	}
 
-	bytes, err := s.c.callAPI(ctx, r)
+	bytes, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,13 +118,13 @@ func (s *GetListService) Id(id uint) *GetListService {
 	return s
 }
 
-func (s *GetListService) Do(ctx context.Context) (*List, error) {
+func (s *GetListService) Do(ctx context.Context, opts ...requestOption) (*List, error) {
 	r := &request{
 		method:   http.MethodGet,
 		endpoint: fmt.Sprintf("/lists/%d", s.id),
 	}
 
-	data, err := s.c.callAPI(ctx, r)
+	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (s *CreateListService) Tags(tags []string) *CreateListService {
 	return s
 }
 
-func (s *CreateListService) Do(ctx context.Context) (*List, error) {
+func (s *CreateListService) Do(ctx context.Context, opts ...requestOption) (*List, error) {
 	r := &request{
 		method:   http.MethodPost,
 		endpoint: "/lists",
@@ -178,7 +178,7 @@ func (s *CreateListService) Do(ctx context.Context) (*List, error) {
 	if s.tags != nil && len(s.tags) > 0 {
 		r.setParam("tags", s.tags)
 	}
-	data, err := s.c.callAPI(ctx, r)
+	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (s *UpdateListService) Tags(tags []string) *UpdateListService {
 	return s
 }
 
-func (s *UpdateListService) Do(ctx context.Context) (*List, error) {
+func (s *UpdateListService) Do(ctx context.Context, opts ...requestOption) (*List, error) {
 	r := &request{
 		method:   http.MethodPut,
 		endpoint: fmt.Sprintf("/lists/%d", s.id),
@@ -231,7 +231,7 @@ func (s *UpdateListService) Do(ctx context.Context) (*List, error) {
 	if s.tags != nil && len(s.tags) > 0 {
 		r.setParam("tags", s.tags)
 	}
-	data, err := s.c.callAPI(ctx, r)
+	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -254,13 +254,13 @@ func (s *DeleteListService) Id(id uint) *DeleteListService {
 	return s
 }
 
-func (s *DeleteListService) Do(ctx context.Context) error {
+func (s *DeleteListService) Do(ctx context.Context, opts ...requestOption) error {
 	r := &request{
 		method:   http.MethodDelete,
 		endpoint: fmt.Sprintf("/lists/%d", s.id),
 	}
 
-	_, err := s.c.callAPI(ctx, r)
+	_, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return err
 	}

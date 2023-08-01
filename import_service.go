@@ -17,13 +17,13 @@ type GetImportStatusService struct {
 	c ClientInterface
 }
 
-func (s *GetImportStatusService) Do(ctx context.Context) (*ImportStatus, error) {
+func (s *GetImportStatusService) Do(ctx context.Context, opts ...requestOption) (*ImportStatus, error) {
 	r := &request{
 		method:   http.MethodGet,
 		endpoint: "/import/subscribers",
 	}
 
-	data, err := s.c.callAPI(ctx, r)
+	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -40,13 +40,13 @@ type GetImportLogsService struct {
 	c ClientInterface
 }
 
-func (s *GetImportLogsService) Do(ctx context.Context) (*string, error) {
+func (s *GetImportLogsService) Do(ctx context.Context, opts ...requestOption) (*string, error) {
 	r := &request{
 		method:   http.MethodGet,
 		endpoint: "/import/subscribers/logs",
 	}
 
-	data, err := s.c.callAPI(ctx, r)
+	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (s *ImportSubscribersService) Params(params map[string]interface{}) *Import
 	return s
 }
 
-func (s *ImportSubscribersService) Do(ctx context.Context) error {
+func (s *ImportSubscribersService) Do(ctx context.Context, opts ...requestOption) error {
 	r := &request{
 		method:   http.MethodPost,
 		endpoint: "/import/subscribers",
@@ -90,7 +90,7 @@ func (s *ImportSubscribersService) Do(ctx context.Context) error {
 	r.setFormParam("params", param)
 	r.setFormParam("file", s.file)
 
-	_, err = s.c.callAPI(ctx, r)
+	_, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 
@@ -98,13 +98,13 @@ type DeleteImportService struct {
 	c ClientInterface
 }
 
-func (s *DeleteImportService) Do(ctx context.Context) error {
+func (s *DeleteImportService) Do(ctx context.Context, opts ...requestOption) error {
 	r := &request{
 		method:   http.MethodDelete,
 		endpoint: "/import/subscribers",
 	}
 
-	_, err := s.c.callAPI(ctx, r)
+	_, err := s.c.callAPI(ctx, r, opts...)
 
 	return err
 }
