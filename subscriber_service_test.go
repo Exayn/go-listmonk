@@ -2,6 +2,7 @@ package listmonk
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -79,6 +80,8 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberListService() {
 	s.Equal("john@example.com", result[0].Email)
 	s.Equal(uint(2), result[1].Id)
 	s.Equal("sugar@example.com", result[1].Email)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
 }
 
 func (s *subscriberServiceTestSuite) TestGetSubscriberService() {
@@ -124,6 +127,9 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberService() {
 	s.Nil(err)
 	s.Equal(uint(1), result.Id)
 	s.Equal("john@example.com", result.Email)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/subscribers/%d", 1))
 }
 
 func (s *subscriberServiceTestSuite) TestCreateSubscriberService() {
@@ -158,6 +164,8 @@ func (s *subscriberServiceTestSuite) TestCreateSubscriberService() {
 	s.Equal(uint(3), result.Id)
 	s.Equal("The Subscriber", result.Name)
 	s.Equal("subsriber@domain.com", result.Email)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
 }
 
 func (s *subscriberServiceTestSuite) TestUpdateSubscribersListsService() {
@@ -179,6 +187,8 @@ func (s *subscriberServiceTestSuite) TestUpdateSubscribersListsService() {
 
 	s.Nil(err)
 	s.Equal(true, *result)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
 }
 
 func (s *subscriberServiceTestSuite) TestUpdateSubscriberService() {
@@ -214,6 +224,9 @@ func (s *subscriberServiceTestSuite) TestUpdateSubscriberService() {
 	s.Equal(uint(3), result.Id)
 	s.Equal("The Subscriber", result.Name)
 	s.Equal("subsriber@domain.com", result.Email)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/subscribers/%d", 3))
 }
 
 func (s *subscriberServiceTestSuite) TestBlocklistsSubscriberService() {
@@ -233,6 +246,9 @@ func (s *subscriberServiceTestSuite) TestBlocklistsSubscriberService() {
 
 	s.Nil(err)
 	s.Equal(true, *result)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/subscribers/%d/blocklists", 1))
 }
 
 func (s *subscriberServiceTestSuite) TestBlocklistsQuerySubscriberService() {
@@ -252,6 +268,8 @@ func (s *subscriberServiceTestSuite) TestBlocklistsQuerySubscriberService() {
 
 	s.Nil(err)
 	s.Equal(true, *result)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
 }
 
 func (s *subscriberServiceTestSuite) TestDeleteSubscriberService() {
@@ -290,6 +308,8 @@ func (s *subscriberServiceTestSuite) TestDeleteSubscribersService() {
 
 	s.Nil(err)
 	s.Equal(true, *result)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
 }
 
 func (s *subscriberServiceTestSuite) TestDeleteSubscribersQueryService() {
@@ -309,4 +329,6 @@ func (s *subscriberServiceTestSuite) TestDeleteSubscribersQueryService() {
 
 	s.Nil(err)
 	s.Equal(true, *result)
+
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
 }
