@@ -14,25 +14,35 @@ type ClientInterface interface {
 type Client struct {
 	ClientInterface
 	baseURL    string
+	username   *string
+	password   *string
 	httpClient *http.Client
 }
 
-func NewClient(baseURL string) *Client {
+func NewClient(baseURL string, username, password *string) *Client {
 	return &Client{
 		baseURL:    baseURL,
+		username:   username,
+		password:   password,
 		httpClient: &http.Client{},
 	}
 }
 
-func NewClientWithCustomHTTPClient(baseURL string, httpClient *http.Client) *Client {
+func NewClientWithCustomHTTPClient(baseURL string, username, password *string, httpClient *http.Client) *Client {
 	return &Client{
 		baseURL:    baseURL,
+		username:   username,
+		password:   password,
 		httpClient: httpClient,
 	}
 }
 
 func (c *Client) callAPI(ctx context.Context, r *request, opts ...requestOption) ([]byte, error) {
 	req, err := r.toHttpRequest(c.baseURL, ctx, opts...)
+
+	if c.username != nil && c.password != nil {
+		req.SetBasicAuth(*c.username, *c.password)
+	}
 
 	if err != nil {
 		return nil, err
@@ -185,6 +195,60 @@ func (c *Client) NewUpdateCampaignStatusService() *UpdateCampaignStatusService {
 
 func (c *Client) NewDeleteCampaignService() *DeleteCampaignService {
 	return &DeleteCampaignService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetMediaService() *GetMediaService {
+	return &GetMediaService{
+		c: c,
+	}
+}
+
+func (c *Client) NewCreateMediaService() *CreateMediaService {
+	return &CreateMediaService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteMediaService() *DeleteMediaService {
+	return &DeleteMediaService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetTemplatesService() *GetTemplatesService {
+	return &GetTemplatesService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetTemplateService() *GetTemplateService {
+	return &GetTemplateService{
+		c: c,
+	}
+}
+
+func (c *Client) NewGetTemplatePreviewService() *GetTemplatePreviewService {
+	return &GetTemplatePreviewService{
+		c: c,
+	}
+}
+
+func (c *Client) NewUpdateTemplateAsDefaultService() *UpdateTemplateAsDefaultService {
+	return &UpdateTemplateAsDefaultService{
+		c: c,
+	}
+}
+
+func (c *Client) NewDeleteTemplateService() *DeleteTemplateService {
+	return &DeleteTemplateService{
+		c: c,
+	}
+}
+
+func (c *Client) NewPostTransactionalService() *PostTransactionalService {
+	return &PostTransactionalService{
 		c: c,
 	}
 }
