@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -58,12 +57,12 @@ func (s *listServiceTestSuite) TestGetListsService() {
 
 	lists, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), 2, len(lists))
-	assert.Equal(s.T(), "public", lists[0].Type)
-	assert.Equal(s.T(), "double", lists[0].Optin)
-	assert.Equal(s.T(), "test", lists[0].Tags[0])
-	assert.Equal(s.T(), "Default list", lists[0].Name)
+	s.Nil(err)
+	s.Equal(2, len(lists))
+	s.Equal("public", lists[0].Type)
+	s.Equal("double", lists[0].Optin)
+	s.Equal("test", lists[0].Tags[0])
+	s.Equal("Default list", lists[0].Name)
 }
 
 func (s *listServiceTestSuite) TestGetListService() {
@@ -90,11 +89,11 @@ func (s *listServiceTestSuite) TestGetListService() {
 
 	list, err := service.Id(1).Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), "public", list.Type)
-	assert.Equal(s.T(), "double", list.Optin)
-	assert.Equal(s.T(), "test", list.Tags[0])
-	assert.Equal(s.T(), "Default list", list.Name)
+	s.Nil(err)
+	s.Equal("public", list.Type)
+	s.Equal("double", list.Optin)
+	s.Equal("test", list.Tags[0])
+	s.Equal("Default list", list.Name)
 }
 
 func (s *listServiceTestSuite) TestCreateListService() {
@@ -122,11 +121,11 @@ func (s *listServiceTestSuite) TestCreateListService() {
 
 	list, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), "public", list.Type)
-	assert.Equal(s.T(), "double", list.Optin)
-	assert.Equal(s.T(), "test", list.Tags[0])
-	assert.Equal(s.T(), "Default list", list.Name)
+	s.Nil(err)
+	s.Equal("public", list.Type)
+	s.Equal("double", list.Optin)
+	s.Equal("test", list.Tags[0])
+	s.Equal("Default list", list.Name)
 }
 
 func (s *listServiceTestSuite) TestUpdateListService() {
@@ -157,11 +156,11 @@ func (s *listServiceTestSuite) TestUpdateListService() {
 
 	list, err := service.Id(1).Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), "public", list.Type)
-	assert.Equal(s.T(), "double", list.Optin)
-	assert.Equal(s.T(), "test", list.Tags[0])
-	assert.Equal(s.T(), "Default list", list.Name)
+	s.Nil(err)
+	s.Equal("public", list.Type)
+	s.Equal("double", list.Optin)
+	s.Equal("test", list.Tags[0])
+	s.Equal("Default list", list.Name)
 }
 
 func (s *listServiceTestSuite) TestDeleteListService() {
@@ -175,5 +174,5 @@ func (s *listServiceTestSuite) TestDeleteListService() {
 
 	err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
+	s.Nil(err)
 }

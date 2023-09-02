@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -33,11 +32,11 @@ func (s *importServiceTestSuite) TestGetImportStatusService() {
 
 	status, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), "", status.Name)
-	assert.Equal(s.T(), "none", status.Status)
-	assert.Equal(s.T(), uint(0), status.Total)
-	assert.Equal(s.T(), uint(0), status.Imported)
+	s.Nil(err)
+	s.Equal("", status.Name)
+	s.Equal("none", status.Status)
+	s.Equal(uint(0), status.Total)
+	s.Equal(uint(0), status.Imported)
 }
 
 func (s *importServiceTestSuite) TestGetImportLogsService() {
@@ -52,8 +51,8 @@ func (s *importServiceTestSuite) TestGetImportLogsService() {
 
 	logs, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), "test", *logs)
+	s.Nil(err)
+	s.Equal("test", *logs)
 }
 
 func (s *importServiceTestSuite) TestImportSubscribersService() {
@@ -66,7 +65,7 @@ func (s *importServiceTestSuite) TestImportSubscribersService() {
 
 	err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
+	s.Nil(err)
 }
 
 func (s *importServiceTestSuite) TestDeleteImportService() {
@@ -86,5 +85,5 @@ func (s *importServiceTestSuite) TestDeleteImportService() {
 
 	err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
+	s.Nil(err)
 }

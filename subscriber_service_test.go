@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -74,12 +73,12 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberListService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Greater(s.T(), len(result), 0)
-	assert.Equal(s.T(), uint(1), result[0].Id)
-	assert.Equal(s.T(), "john@example.com", result[0].Email)
-	assert.Equal(s.T(), uint(2), result[1].Id)
-	assert.Equal(s.T(), "sugar@example.com", result[1].Email)
+	s.Nil(err)
+	s.Greater(len(result), 0)
+	s.Equal(uint(1), result[0].Id)
+	s.Equal("john@example.com", result[0].Email)
+	s.Equal(uint(2), result[1].Id)
+	s.Equal("sugar@example.com", result[1].Email)
 }
 
 func (s *subscriberServiceTestSuite) TestGetSubscriberService() {
@@ -122,9 +121,9 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberService() {
 
 	result, err := service.Id(1).Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result.Id)
-	assert.Equal(s.T(), "john@example.com", result.Email)
+	s.Nil(err)
+	s.Equal(uint(1), result.Id)
+	s.Equal("john@example.com", result.Email)
 }
 
 func (s *subscriberServiceTestSuite) TestCreateSubscriberService() {
@@ -155,10 +154,10 @@ func (s *subscriberServiceTestSuite) TestCreateSubscriberService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(3), result.Id)
-	assert.Equal(s.T(), "The Subscriber", result.Name)
-	assert.Equal(s.T(), "subsriber@domain.com", result.Email)
+	s.Nil(err)
+	s.Equal(uint(3), result.Id)
+	s.Equal("The Subscriber", result.Name)
+	s.Equal("subsriber@domain.com", result.Email)
 }
 
 func (s *subscriberServiceTestSuite) TestUpdateSubscribersListsService() {
@@ -178,8 +177,8 @@ func (s *subscriberServiceTestSuite) TestUpdateSubscribersListsService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }
 
 func (s *subscriberServiceTestSuite) TestUpdateSubscriberService() {
@@ -211,10 +210,10 @@ func (s *subscriberServiceTestSuite) TestUpdateSubscriberService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(3), result.Id)
-	assert.Equal(s.T(), "The Subscriber", result.Name)
-	assert.Equal(s.T(), "subsriber@domain.com", result.Email)
+	s.Nil(err)
+	s.Equal(uint(3), result.Id)
+	s.Equal("The Subscriber", result.Name)
+	s.Equal("subsriber@domain.com", result.Email)
 }
 
 func (s *subscriberServiceTestSuite) TestBlocklistsSubscriberService() {
@@ -232,8 +231,8 @@ func (s *subscriberServiceTestSuite) TestBlocklistsSubscriberService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }
 
 func (s *subscriberServiceTestSuite) TestBlocklistsQuerySubscriberService() {
@@ -251,8 +250,8 @@ func (s *subscriberServiceTestSuite) TestBlocklistsQuerySubscriberService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }
 
 func (s *subscriberServiceTestSuite) TestDeleteSubscriberService() {
@@ -270,8 +269,8 @@ func (s *subscriberServiceTestSuite) TestDeleteSubscriberService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }
 
 func (s *subscriberServiceTestSuite) TestDeleteSubscribersService() {
@@ -289,8 +288,8 @@ func (s *subscriberServiceTestSuite) TestDeleteSubscribersService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }
 
 func (s *subscriberServiceTestSuite) TestDeleteSubscribersQueryService() {
@@ -308,6 +307,6 @@ func (s *subscriberServiceTestSuite) TestDeleteSubscribersQueryService() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), true, *result)
+	s.Nil(err)
+	s.Equal(true, *result)
 }

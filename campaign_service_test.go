@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -66,10 +65,10 @@ func (s *campaignServiceTestSuite) TestGetCampaigns() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), len(result), 1)
-	assert.Equal(s.T(), uint(1), result[0].Id)
-	assert.Equal(s.T(), "Test campaign", result[0].Name)
+	s.Nil(err)
+	s.Equal(len(result), 1)
+	s.Equal(uint(1), result[0].Id)
+	s.Equal("Test campaign", result[0].Name)
 }
 
 func (s *campaignServiceTestSuite) TestGetCampaign() {
@@ -114,11 +113,11 @@ func (s *campaignServiceTestSuite) TestGetCampaign() {
 
 	result, err := service.Id(1).Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result.Id)
-	assert.Equal(s.T(), "Test campaign", result.Name)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d", 1))
+	s.Nil(err)
+	s.Equal(uint(1), result.Id)
+	s.Equal("Test campaign", result.Name)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d", 1))
 }
 
 func (s *campaignServiceTestSuite) TestCreateCampaign() {
@@ -170,11 +169,11 @@ func (s *campaignServiceTestSuite) TestCreateCampaign() {
 		Lists([]uint{1}).
 		Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result.Id)
-	assert.Equal(s.T(), "Test campaign", result.Name)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, "/campaigns")
+	s.Nil(err)
+	s.Equal(uint(1), result.Id)
+	s.Equal("Test campaign", result.Name)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, "/campaigns")
 }
 
 func (s *campaignServiceTestSuite) TestUpdateCampaignStatus() {
@@ -219,11 +218,11 @@ func (s *campaignServiceTestSuite) TestUpdateCampaignStatus() {
 
 	result, err := service.Id(1).Status("draft").Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result.Id)
-	assert.Equal(s.T(), "Test campaign", result.Name)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d/status", 1))
+	s.Nil(err)
+	s.Equal(uint(1), result.Id)
+	s.Equal("Test campaign", result.Name)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d/status", 1))
 }
 
 func (s *campaignServiceTestSuite) TestDeleteCampaign() {
@@ -237,7 +236,7 @@ func (s *campaignServiceTestSuite) TestDeleteCampaign() {
 
 	err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d", 1))
+	s.Nil(err)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d", 1))
 }

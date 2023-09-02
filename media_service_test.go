@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -38,11 +37,11 @@ func (s *mediaServiceTestSuite) TestGetMedia() {
 
 	result, err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result[0].Id)
-	assert.Equal(s.T(), "Media file", result[0].Filename)
-	assert.Equal(s.T(), "ec7b45ce-1408-4e5c-924e-965326a20287", result[0].Uuid)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
+	s.Nil(err)
+	s.Equal(uint(1), result[0].Id)
+	s.Equal("Media file", result[0].Filename)
+	s.Equal("ec7b45ce-1408-4e5c-924e-965326a20287", result[0].Uuid)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
 }
 
 func (s *mediaServiceTestSuite) TestCreateCampaign() {
@@ -64,11 +63,11 @@ func (s *mediaServiceTestSuite) TestCreateCampaign() {
 
 	result, err := service.File([]byte("file")).Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), uint(1), result.Id)
-	assert.Equal(s.T(), "Media file", result.Filename)
-	assert.Equal(s.T(), "ec7b45ce-1408-4e5c-924e-965326a20287", result.Uuid)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
+	s.Nil(err)
+	s.Equal(uint(1), result.Id)
+	s.Equal("Media file", result.Filename)
+	s.Equal("ec7b45ce-1408-4e5c-924e-965326a20287", result.Uuid)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
 }
 
 func (s *mediaServiceTestSuite) TestDeleteMedia() {
@@ -82,7 +81,7 @@ func (s *mediaServiceTestSuite) TestDeleteMedia() {
 
 	err := service.Do(context.Background())
 
-	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
-	assert.Equal(s.T(), mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/media/%d", 1))
+	s.Nil(err)
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "DELETE")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/media/%d", 1))
 }
