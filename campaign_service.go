@@ -8,28 +8,34 @@ import (
 	"time"
 )
 
+type CampaignList struct {
+	Id   uint   `json:"id"`
+	Name string `json:"name"`
+}
+
 type Campaign struct {
-	Id          uint      `json:"id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
-	CampaignId  uint      `json:"CampaignID"`
-	View        uint      `json:"view"`
-	Clicks      uint      `json:"clicks"`
-	StartedAt   time.Time `json:"started_at"`
-	ToSend      uint      `json:"to_send"`
-	Sent        uint      `json:"sent"`
-	Uuid        string    `json:"uuid"`
-	Name        string    `json:"name"`
-	Type        string    `json:"type"`
-	Subject     string    `json:"subject"`
-	FromEmail   string    `json:"from_email"`
-	Body        string    `json:"body"`
-	SendAt      time.Time `json:"send_at"`
-	Status      string    `json:"status"`
-	ContentType string    `json:"content_type"`
-	Tags        []string  `json:"tags"`
-	TemplateId  uint      `json:"template_id"`
-	Messenger   string    `json:"messenger"`
+	Id          uint           `json:"id"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
+	CampaignId  uint           `json:"CampaignID"`
+	View        uint           `json:"view"`
+	Clicks      uint           `json:"clicks"`
+	Lists       []CampaignList `json:"lists"`
+	StartedAt   time.Time      `json:"started_at"`
+	ToSend      uint           `json:"to_send"`
+	Sent        uint           `json:"sent"`
+	Uuid        string         `json:"uuid"`
+	Name        string         `json:"name"`
+	Type        string         `json:"type"`
+	Subject     string         `json:"subject"`
+	FromEmail   string         `json:"from_email"`
+	Body        string         `json:"body"`
+	SendAt      time.Time      `json:"send_at"`
+	Status      string         `json:"status"`
+	ContentType string         `json:"content_type"`
+	Tags        []string       `json:"tags"`
+	TemplateId  uint           `json:"template_id"`
+	Messenger   string         `json:"messenger"`
 }
 
 type GetCampaignsService struct {

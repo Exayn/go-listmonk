@@ -69,6 +69,9 @@ func (s *campaignServiceTestSuite) TestGetCampaigns() {
 	s.Equal(len(result), 1)
 	s.Equal(uint(1), result[0].Id)
 	s.Equal("Test campaign", result[0].Name)
+	s.Equal(1, len(result[0].Lists))
+	s.Equal(uint(1), result[0].Lists[0].Id)
+	s.Equal("Default list", result[0].Lists[0].Name)
 }
 
 func (s *campaignServiceTestSuite) TestGetCampaign() {
@@ -116,6 +119,10 @@ func (s *campaignServiceTestSuite) TestGetCampaign() {
 	s.Nil(err)
 	s.Equal(uint(1), result.Id)
 	s.Equal("Test campaign", result.Name)
+	s.Equal(1, len(result.Lists))
+	s.Equal(uint(1), result.Lists[0].Id)
+	s.Equal("Default list", result.Lists[0].Name)
+
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d", 1))
 }
@@ -172,6 +179,10 @@ func (s *campaignServiceTestSuite) TestCreateCampaign() {
 	s.Nil(err)
 	s.Equal(uint(1), result.Id)
 	s.Equal("Test campaign", result.Name)
+	s.Equal(1, len(result.Lists))
+	s.Equal(uint(1), result.Lists[0].Id)
+	s.Equal("Default list", result.Lists[0].Name)
+
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, "/campaigns")
 }
@@ -221,6 +232,10 @@ func (s *campaignServiceTestSuite) TestUpdateCampaignStatus() {
 	s.Nil(err)
 	s.Equal(uint(1), result.Id)
 	s.Equal("Test campaign", result.Name)
+	s.Equal(1, len(result.Lists))
+	s.Equal(uint(1), result.Lists[0].Id)
+	s.Equal("Default list", result.Lists[0].Name)
+
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "PUT")
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/campaigns/%d/status", 1))
 }

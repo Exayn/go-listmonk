@@ -9,15 +9,27 @@ import (
 	"context"
 )
 
+type SubscriberList struct {
+	Id                 uint      `json:"id"`
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
+	Uuid               string    `json:"uuid"`
+	Name               string    `json:"name"`
+	Type               string    `json:"type"`
+	Tags               []string  `json:"tags"`
+	SubscriptionStatus string    `json:"subscription_status"`
+}
+
 type Subscriber struct {
-	Id         uint      `json:"id"`
-	CreatedAt  time.Time `json:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at"`
-	Uuid       string    `json:"uuid"`
-	Email      string    `json:"email"`
-	Name       string    `json:"name"`
-	Status     string    `json:"status"`
-	Attributes string    `json:"attributes"`
+	Id         uint             `json:"id"`
+	CreatedAt  time.Time        `json:"created_at"`
+	UpdatedAt  time.Time        `json:"updated_at"`
+	Uuid       string           `json:"uuid"`
+	Email      string           `json:"email"`
+	Name       string           `json:"name"`
+	Status     string           `json:"status"`
+	Lists      []SubscriberList `json:"lists"`
+	Attributes string           `json:"attributes"`
 }
 
 type GetSubscribersService struct {

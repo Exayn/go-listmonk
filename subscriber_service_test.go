@@ -81,6 +81,11 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberListService() {
 	s.Equal(uint(2), result[1].Id)
 	s.Equal("sugar@example.com", result[1].Email)
 
+	s.Equal(1, len(result[0].Lists))
+	s.Equal(uint(1), result[0].Lists[0].Id)
+	s.Equal(1, len(result[0].Lists[0].Tags))
+	s.Equal("test", result[0].Lists[0].Tags[0])
+
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
 }
 
@@ -128,6 +133,10 @@ func (s *subscriberServiceTestSuite) TestGetSubscriberService() {
 	s.Equal(uint(1), result.Id)
 	s.Equal("john@example.com", result.Email)
 
+	s.Equal(uint(1), result.Lists[0].Id)
+	s.Equal(1, len(result.Lists[0].Tags))
+	s.Equal("test", result.Lists[0].Tags[0])
+
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "GET")
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).endpoint, fmt.Sprintf("/subscribers/%d", 1))
 }
@@ -143,8 +152,7 @@ func (s *subscriberServiceTestSuite) TestCreateSubscriberService() {
             "email": "subsriber@domain.com",
             "name": "The Subscriber",
             "attribs": {},
-            "status": "enabled",
-            "lists": [1]
+            "status": "enabled"
         }
     }`)
 
@@ -202,8 +210,7 @@ func (s *subscriberServiceTestSuite) TestUpdateSubscriberService() {
             "email": "subsriber@domain.com",
             "name": "The Subscriber",
             "attribs": {},
-            "status": "enabled",
-            "lists": [1]
+            "status": "enabled"
         }
     }`)
 
