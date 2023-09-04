@@ -104,7 +104,7 @@ func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx 
 		body = r.body
 	}
 
-	req, err = http.NewRequest(r.method, fmt.Sprintf("%s/api/%s", baseUrl, r.endpoint), body)
+	req, err = http.NewRequest(r.method, fmt.Sprintf("%s/api/%s", baseUrl, strings.TrimPrefix(r.endpoint, "/")), body)
 	if err != nil {
 		return nil, err
 	}
