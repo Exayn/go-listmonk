@@ -38,11 +38,7 @@ func NewClientWithCustomHTTPClient(baseURL string, username, password *string, h
 }
 
 func (c *Client) callAPI(ctx context.Context, r *request, opts ...requestOption) ([]byte, error) {
-	req, err := r.toHttpRequest(c.baseURL, ctx, opts...)
-
-	if c.username != nil && c.password != nil {
-		req.SetBasicAuth(*c.username, *c.password)
-	}
+	req, err := r.toHttpRequest(c.baseURL, c.username, c.password, ctx, opts...)
 
 	if err != nil {
 		return nil, err

@@ -89,7 +89,7 @@ func (r *request) validate() (err error) {
 	return nil
 }
 
-func (r *request) toHttpRequest(baseUrl string, ctx context.Context, opts ...requestOption) (req *http.Request, err error) {
+func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx context.Context, opts ...requestOption) (req *http.Request, err error) {
 	err = r.validate()
 	if err != nil {
 		return nil, err
@@ -110,7 +110,14 @@ func (r *request) toHttpRequest(baseUrl string, ctx context.Context, opts ...req
 	}
 
 	req.URL.RawQuery = r.query.Encode()
-	req.Header = r.header
+
+	if r.header != nil {
+		req.Header = r.header
+	}
+
+	if username != nil && password != nil {
+		req.SetBasicAuth(*username, *password)
+	}
 
 	for _, opt := range opts {
 		opt(r)
