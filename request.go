@@ -21,15 +21,6 @@ type request struct {
 	body     io.Reader
 }
 
-// addParam add param with key/value to query string
-func (r *request) addParam(key string, value interface{}) *request {
-	if r.query == nil {
-		r.query = url.Values{}
-	}
-	r.query.Add(key, fmt.Sprintf("%v", value))
-	return r
-}
-
 // setParam set param with key/value to query string
 func (r *request) setParam(key string, value interface{}) *request {
 	if r.query == nil {
@@ -44,14 +35,6 @@ func (r *request) setParam(key string, value interface{}) *request {
 	}
 
 	r.query.Set(key, fmt.Sprintf("%v", value))
-	return r
-}
-
-// setParams set params with key/values to query string
-func (r *request) setParams(m map[string]interface{}) *request {
-	for key, value := range m {
-		r.setParam(key, value)
-	}
 	return r
 }
 
@@ -71,29 +54,20 @@ func (r *request) setFormParam(key string, value interface{}) *request {
 	return r
 }
 
-// setFormParams set params with key/values to request form body
-func (r *request) setFormParams(m map[string]interface{}) *request {
-	for key, value := range m {
-		r.setFormParam(key, value)
-	}
-	return r
-}
-
-func (r *request) validate() (err error) {
+func (r *request) validate() {
 	if r.query == nil {
 		r.query = url.Values{}
 	}
 	if r.form == nil {
 		r.form = url.Values{}
 	}
-	return nil
+	if r.header == nil {
+		r.header = http.Header{}
+	}
 }
 
 func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx context.Context, opts ...requestOption) (req *http.Request, err error) {
-	err = r.validate()
-	if err != nil {
-		return nil, err
-	}
+	r.validate()
 
 	var body io.Reader
 
@@ -110,10 +84,7 @@ func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx 
 	}
 
 	req.URL.RawQuery = r.query.Encode()
-
-	if r.header != nil {
-		req.Header = r.header
-	}
+	req.Header = r.header
 
 	if username != nil && password != nil {
 		req.SetBasicAuth(*username, *password)
