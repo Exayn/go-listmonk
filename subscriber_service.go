@@ -539,7 +539,7 @@ func (s *DeleteSubscribersQueryService) Query(query string) *DeleteSubscribersQu
 
 func (s *DeleteSubscribersQueryService) Do(ctx context.Context, opts ...requestOption) (*bool, error) {
 	r := &request{
-		method:   http.MethodDelete,
+		method:   http.MethodPost,
 		endpoint: "/subscribers/query/delete",
 	}
 
