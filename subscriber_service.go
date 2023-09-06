@@ -199,18 +199,18 @@ func (s *CreateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 		endpoint: "/subscribers",
 	}
 
-	r.setFormParam("email", s.email)
-	r.setFormParam("name", s.name)
-	r.setFormParam("status", s.status)
+	r.setJsonParam("email", s.email)
+	r.setJsonParam("name", s.name)
+	r.setJsonParam("status", s.status)
 
 	if len(s.listIds) > 0 {
-		r.setFormParamList("lists", s.listIds)
+		r.setJsonParam("lists", s.listIds)
 	}
 	if s.attributes != nil {
-		r.setFormParam("attributes", s.attributes)
+		r.setJsonParam("attributes", s.attributes)
 	}
 	if s.preconfirmSubscriptions != nil {
-		r.setFormParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
+		r.setJsonParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
 	}
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
@@ -276,12 +276,12 @@ func (s *UpdateSubscribersListsService) Do(ctx context.Context, opts ...requestO
 		endpoint: "/subscribers/lists",
 	}
 
-	r.setFormParamList("ids", s.ids)
-	r.setFormParam("action", s.action)
-	r.setFormParamList("target_list_ids", s.listIds)
+	r.setJsonParam("ids", s.ids)
+	r.setJsonParam("action", s.action)
+	r.setJsonParam("target_list_ids", s.listIds)
 
 	if s.status != nil {
-		r.setFormParam("status", s.status)
+		r.setJsonParam("status", s.status)
 	}
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
@@ -352,18 +352,18 @@ func (s *UpdateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 		endpoint: fmt.Sprintf("/subscribers/%d", s.id),
 	}
 
-	r.setFormParam("email", s.email)
-	r.setFormParam("name", s.name)
-	r.setFormParam("status", s.status)
+	r.setJsonParam("email", s.email)
+	r.setJsonParam("name", s.name)
+	r.setJsonParam("status", s.status)
 
 	if len(s.listIds) > 0 {
-		r.setFormParamList("lists", s.listIds)
+		r.setJsonParam("lists", s.listIds)
 	}
 	if s.attributes != nil {
-		r.setFormParam("attributes", s.attributes)
+		r.setJsonParam("attributes", s.attributes)
 	}
 	if s.preconfirmSubscriptions != nil {
-		r.setFormParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
+		r.setJsonParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
 	}
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
@@ -443,7 +443,7 @@ func (s *BlocklistsQuerySubscriberService) Do(ctx context.Context, opts ...reque
 		endpoint: "/subscribers/blocklists",
 	}
 
-	r.setFormParam("query", s.query)
+	r.setJsonParam("query", s.query)
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
 

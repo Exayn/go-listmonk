@@ -262,35 +262,35 @@ func (s *CreateCampaignService) Do(ctx context.Context, opts ...requestOption) (
 		endpoint: "/campaigns",
 	}
 
-	r.setFormParam("name", s.name)
-	r.setFormParam("subject", s.subject)
-	r.setFormParamList("lists", s.lists)
-	r.setFormParam("type", s.type_)
-	r.setFormParam("content_type", s.contentType)
-	r.setFormParam("body", s.body)
+	r.setJsonParam("name", s.name)
+	r.setJsonParam("subject", s.subject)
+	r.setJsonParam("lists", s.lists)
+	r.setJsonParam("type", s.type_)
+	r.setJsonParam("content_type", s.contentType)
+	r.setJsonParam("body", s.body)
 
 	if s.fromEmail != nil {
-		r.setFormParam("from_email", *s.fromEmail)
+		r.setJsonParam("from_email", *s.fromEmail)
 	}
 
 	if s.altBody != nil {
-		r.setFormParam("alt_body", *s.altBody)
+		r.setJsonParam("alt_body", *s.altBody)
 	}
 
 	if s.sendAt != nil {
-		r.setFormParam("send_at", *s.sendAt)
+		r.setJsonParam("send_at", *s.sendAt)
 	}
 
 	if s.messenger != nil {
-		r.setFormParam("messenger", *s.messenger)
+		r.setJsonParam("messenger", *s.messenger)
 	}
 
 	if s.templateId != nil {
-		r.setFormParam("template_id", *s.templateId)
+		r.setJsonParam("template_id", *s.templateId)
 	}
 
 	if s.tags != nil {
-		r.setFormParam("tags", s.tags)
+		r.setJsonParam("tags", s.tags)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
@@ -328,7 +328,7 @@ func (s *UpdateCampaignStatusService) Do(ctx context.Context, opts ...requestOpt
 		endpoint: fmt.Sprintf("/campaigns/%d/status", s.id),
 	}
 
-	r.setFormParam("status", s.status)
+	r.setJsonParam("status", s.status)
 
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {

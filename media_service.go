@@ -59,7 +59,7 @@ func (s *CreateMediaService) Do(ctx context.Context, opts ...requestOption) (*Me
 		endpoint: "/media",
 	}
 
-	r.setFormParam("file", s.file)
+	r.setJsonParam("file", s.file)
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
 

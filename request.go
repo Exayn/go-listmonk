@@ -1,6 +1,7 @@
 package listmonk
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -16,7 +17,7 @@ type request struct {
 	method   string
 	endpoint string
 	query    url.Values
-	form     url.Values
+	json     map[string]interface{}
 	header   http.Header
 	body     io.Reader
 }
@@ -46,18 +47,13 @@ func (r *request) setParamList(baseParam string, params ...interface{}) *request
 }
 
 // setFormParam set param with key/value to request form body
-func (r *request) setFormParam(key string, value interface{}) *request {
-	if r.form == nil {
-		r.form = url.Values{}
+func (r *request) setJsonParam(key string, value interface{}) *request {
+	if r.json == nil {
+		r.json = map[string]interface{}{}
 	}
-	r.form.Set(key, fmt.Sprintf("%v", value))
-	return r
-}
 
-func (r *request) setFormParamList(key string, params ...interface{}) *request {
-	for index, value := range params {
-		r.setFormParam(fmt.Sprintf("%s[%d]", key, index), value)
-	}
+	r.json[key] = value
+
 	return r
 }
 
@@ -65,8 +61,8 @@ func (r *request) validate() {
 	if r.query == nil {
 		r.query = url.Values{}
 	}
-	if r.form == nil {
-		r.form = url.Values{}
+	if r.json == nil {
+		r.json = map[string]interface{}{}
 	}
 	if r.header == nil {
 		r.header = http.Header{}
@@ -78,11 +74,13 @@ func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx 
 
 	var body io.Reader
 
-	if len(r.form) > 0 {
-		body = strings.NewReader(r.form.Encode())
-		r.header.Set("Content-Type", "application/x-www-form-urlencoded")
-	} else {
-		body = r.body
+	if r.json != nil {
+		jsonBytes, err := json.Marshal(r.json)
+		if err != nil {
+			return nil, err
+		}
+		body = bytes.NewReader(jsonBytes)
+		r.header.Set("Content-Type", "application/json")
 	}
 
 	req, err = http.NewRequest(r.method, fmt.Sprintf("%s/api/%s", baseUrl, strings.TrimPrefix(r.endpoint, "/")), body)
@@ -91,10 +89,15 @@ func (r *request) toHttpRequest(baseUrl string, username, password *string, ctx 
 	}
 
 	req.URL.RawQuery = r.query.Encode()
-	req.Header = r.header
 
 	if username != nil && password != nil {
 		req.SetBasicAuth(*username, *password)
+	}
+
+	for key, values := range r.header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
 	}
 
 	for _, opt := range opts {

@@ -87,8 +87,8 @@ func (s *ImportSubscribersService) Do(ctx context.Context, opts ...requestOption
 		return err
 	}
 
-	r.setFormParam("params", param)
-	r.setFormParam("file", s.file)
+	r.setJsonParam("params", param)
+	r.setJsonParam("file", s.file)
 
 	_, err = s.c.callAPI(ctx, r, opts...)
 	return err

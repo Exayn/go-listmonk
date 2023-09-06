@@ -79,11 +79,11 @@ func (s *PostTransactionalService) Do(ctx context.Context, opts ...requestOption
 	}
 
 	if s.subscriberEmail != "" {
-		r.setFormParam("subscriber_email", s.subscriberEmail)
+		r.setJsonParam("subscriber_email", s.subscriberEmail)
 	}
 
 	if s.subscriberId != 0 {
-		r.setFormParam("subscriber_id", s.subscriberId)
+		r.setJsonParam("subscriber_id", s.subscriberId)
 	}
 
 	if len(s.subscriberEmails) > 0 {
@@ -94,7 +94,7 @@ func (s *PostTransactionalService) Do(ctx context.Context, opts ...requestOption
 
 		emails := "[" + strings.Join(quoted, ", ") + "]"
 
-		r.setFormParam("subscriber_emails", emails)
+		r.setJsonParam("subscriber_emails", emails)
 	}
 
 	if len(s.subscriberIds) > 0 {
@@ -106,15 +106,15 @@ func (s *PostTransactionalService) Do(ctx context.Context, opts ...requestOption
 
 		ids := "[" + strings.Join(strIds, ", ") + "]"
 
-		r.setFormParam("subscriber_ids", ids)
+		r.setJsonParam("subscriber_ids", ids)
 	}
 
 	if s.templateId != 0 {
-		r.setFormParam("template_id", s.templateId)
+		r.setJsonParam("template_id", s.templateId)
 	}
 
 	if s.fromEmail != "" {
-		r.setFormParam("from_email", s.fromEmail)
+		r.setJsonParam("from_email", s.fromEmail)
 	}
 
 	if len(s.data) > 0 {
@@ -124,7 +124,7 @@ func (s *PostTransactionalService) Do(ctx context.Context, opts ...requestOption
 			return err
 		}
 
-		r.setFormParam("data", string(dataJson))
+		r.setJsonParam("data", string(dataJson))
 	}
 
 	if len(s.headers) > 0 {
@@ -136,15 +136,15 @@ func (s *PostTransactionalService) Do(ctx context.Context, opts ...requestOption
 
 		headers := "[" + strings.Join(elements, ", ") + "]"
 
-		r.setFormParam("headers", headers)
+		r.setJsonParam("headers", headers)
 	}
 
 	if s.messenger != "" {
-		r.setFormParam("messenger", s.messenger)
+		r.setJsonParam("messenger", s.messenger)
 	}
 
 	if s.content_type != "" {
-		r.setFormParam("content_type", s.content_type)
+		r.setJsonParam("content_type", s.content_type)
 	}
 
 	_, err := s.c.callAPI(ctx, r, opts...)

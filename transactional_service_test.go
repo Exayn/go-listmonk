@@ -37,9 +37,9 @@ func (s *transactionalServiceTestSuite) TestPostTransactionalService() {
 	s.Nil(err)
 
 	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).method, "POST")
-	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).form["template_id"][0], "1")
-	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).form["subscriber_ids"][0], "[1, 2]")
-	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).form["subscriber_emails"][0], "[\"test2\", \"test2\"]")
-	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).form["data"][0], "{\"key1\":\"value1\",\"key2\":\"value2\"}")
-	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).form["headers"][0], "[{\"key1\": \"value1\"}, {\"key2\": \"value2\"}]")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).json["template_id"], uint(1))
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).json["subscriber_ids"], "[1, 2]")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).json["subscriber_emails"], "[\"test2\", \"test2\"]")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).json["data"], "{\"key1\":\"value1\",\"key2\":\"value2\"}")
+	s.Equal(mockClient.Calls[0].Arguments.Get(1).(*request).json["headers"], "[{\"key1\": \"value1\"}, {\"key2\": \"value2\"}]")
 }
