@@ -21,15 +21,15 @@ type SubscriberList struct {
 }
 
 type Subscriber struct {
-	Id         uint             `json:"id"`
-	CreatedAt  time.Time        `json:"created_at"`
-	UpdatedAt  time.Time        `json:"updated_at"`
-	Uuid       string           `json:"uuid"`
-	Email      string           `json:"email"`
-	Name       string           `json:"name"`
-	Status     string           `json:"status"`
-	Lists      []SubscriberList `json:"lists"`
-	Attributes string           `json:"attributes"`
+	Id         uint                   `json:"id"`
+	CreatedAt  time.Time              `json:"created_at"`
+	UpdatedAt  time.Time              `json:"updated_at"`
+	Uuid       string                 `json:"uuid"`
+	Email      string                 `json:"email"`
+	Name       string                 `json:"name"`
+	Status     string                 `json:"status"`
+	Lists      []SubscriberList       `json:"lists"`
+	Attributes map[string]interface{} `json:"attribs"`
 }
 
 type GetSubscribersService struct {
@@ -159,7 +159,7 @@ type CreateSubscriberService struct {
 	name                    string
 	status                  string
 	listIds                 []uint
-	attributes              *string
+	attributes              *map[string]interface{}
 	preconfirmSubscriptions *bool
 }
 
@@ -183,7 +183,7 @@ func (s *CreateSubscriberService) ListIds(listIds []uint) *CreateSubscriberServi
 	return s
 }
 
-func (s *CreateSubscriberService) Attributes(attributes string) *CreateSubscriberService {
+func (s *CreateSubscriberService) Attributes(attributes map[string]interface{}) *CreateSubscriberService {
 	s.attributes = &attributes
 	return s
 }
@@ -207,7 +207,7 @@ func (s *CreateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 		r.setJsonParam("lists", s.listIds)
 	}
 	if s.attributes != nil {
-		r.setJsonParam("attributes", s.attributes)
+		r.setJsonParam("attribs", s.attributes)
 	}
 	if s.preconfirmSubscriptions != nil {
 		r.setJsonParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
@@ -307,7 +307,7 @@ type UpdateSubscriberService struct {
 	name                    string
 	status                  string
 	listIds                 []uint
-	attributes              *string
+	attributes              *map[string]interface{}
 	preconfirmSubscriptions *bool
 }
 
@@ -336,7 +336,7 @@ func (s *UpdateSubscriberService) ListIds(listIds []uint) *UpdateSubscriberServi
 	return s
 }
 
-func (s *UpdateSubscriberService) Attributes(attributes string) *UpdateSubscriberService {
+func (s *UpdateSubscriberService) Attributes(attributes map[string]interface{}) *UpdateSubscriberService {
 	s.attributes = &attributes
 	return s
 }
