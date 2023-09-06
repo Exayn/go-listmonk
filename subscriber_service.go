@@ -360,7 +360,7 @@ func (s *UpdateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 		r.setJsonParam("lists", s.listIds)
 	}
 	if s.attributes != nil {
-		r.setJsonParam("attributes", s.attributes)
+		r.setJsonParam("attribs", s.attributes)
 	}
 	if s.preconfirmSubscriptions != nil {
 		r.setJsonParam("preconfirm_subscriptions", s.preconfirmSubscriptions)
