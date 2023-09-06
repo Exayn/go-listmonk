@@ -204,7 +204,7 @@ func (s *CreateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 	r.setFormParam("status", s.status)
 
 	if len(s.listIds) > 0 {
-		r.setFormParam("lists", s.listIds)
+		r.setFormParamList("lists", s.listIds)
 	}
 	if s.attributes != nil {
 		r.setFormParam("attributes", s.attributes)
@@ -276,9 +276,10 @@ func (s *UpdateSubscribersListsService) Do(ctx context.Context, opts ...requestO
 		endpoint: "/subscribers/lists",
 	}
 
-	r.setFormParam("ids", s.ids)
+	r.setFormParamList("ids", s.ids)
 	r.setFormParam("action", s.action)
-	r.setFormParam("list_ids", s.listIds)
+	r.setFormParamList("target_list_ids", s.listIds)
+
 	if s.status != nil {
 		r.setFormParam("status", s.status)
 	}
@@ -356,7 +357,7 @@ func (s *UpdateSubscriberService) Do(ctx context.Context, opts ...requestOption)
 	r.setFormParam("status", s.status)
 
 	if len(s.listIds) > 0 {
-		r.setFormParam("lists", s.listIds)
+		r.setFormParamList("lists", s.listIds)
 	}
 	if s.attributes != nil {
 		r.setFormParam("attributes", s.attributes)

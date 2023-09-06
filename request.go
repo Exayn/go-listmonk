@@ -54,6 +54,13 @@ func (r *request) setFormParam(key string, value interface{}) *request {
 	return r
 }
 
+func (r *request) setFormParamList(key string, params ...interface{}) *request {
+	for index, value := range params {
+		r.setFormParam(fmt.Sprintf("%s[%d]", key, index), value)
+	}
+	return r
+}
+
 func (r *request) validate() {
 	if r.query == nil {
 		r.query = url.Values{}

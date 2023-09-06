@@ -171,12 +171,12 @@ func (s *CreateListService) Do(ctx context.Context, opts ...requestOption) (*Lis
 		endpoint: "/lists",
 	}
 
-	r.setParam("name", s.name)
-	r.setParam("type", s.type_)
-	r.setParam("optin", s.optin)
+	r.setFormParam("name", s.name)
+	r.setFormParam("type", s.type_)
+	r.setFormParam("optin", s.optin)
 
-	if s.tags != nil && len(s.tags) > 0 {
-		r.setParam("tags", s.tags)
+	if len(s.tags) > 0 {
+		r.setFormParamList("tags", s.tags)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
@@ -225,11 +225,11 @@ func (s *UpdateListService) Do(ctx context.Context, opts ...requestOption) (*Lis
 		endpoint: fmt.Sprintf("/lists/%d", s.id),
 	}
 
-	r.setParam("type", s.type_)
-	r.setParam("optin", s.optin)
+	r.setFormParam("type", s.type_)
+	r.setFormParam("optin", s.optin)
 
 	if s.tags != nil && len(s.tags) > 0 {
-		r.setParam("tags", s.tags)
+		r.setFormParam("tags", s.tags)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {

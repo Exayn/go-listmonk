@@ -262,35 +262,35 @@ func (s *CreateCampaignService) Do(ctx context.Context, opts ...requestOption) (
 		endpoint: "/campaigns",
 	}
 
-	r.setParam("name", s.name)
-	r.setParam("subject", s.subject)
-	r.setParam("lists", s.lists)
-	r.setParam("type", s.type_)
-	r.setParam("content_type", s.contentType)
-	r.setParam("body", s.body)
+	r.setFormParam("name", s.name)
+	r.setFormParam("subject", s.subject)
+	r.setFormParamList("lists", s.lists)
+	r.setFormParam("type", s.type_)
+	r.setFormParam("content_type", s.contentType)
+	r.setFormParam("body", s.body)
 
 	if s.fromEmail != nil {
-		r.setParam("from_email", *s.fromEmail)
+		r.setFormParam("from_email", *s.fromEmail)
 	}
 
 	if s.altBody != nil {
-		r.setParam("alt_body", *s.altBody)
+		r.setFormParam("alt_body", *s.altBody)
 	}
 
 	if s.sendAt != nil {
-		r.setParam("send_at", *s.sendAt)
+		r.setFormParam("send_at", *s.sendAt)
 	}
 
 	if s.messenger != nil {
-		r.setParam("messenger", *s.messenger)
+		r.setFormParam("messenger", *s.messenger)
 	}
 
 	if s.templateId != nil {
-		r.setParam("template_id", *s.templateId)
+		r.setFormParam("template_id", *s.templateId)
 	}
 
 	if s.tags != nil {
-		r.setParam("tags", s.tags)
+		r.setFormParam("tags", s.tags)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
@@ -328,7 +328,7 @@ func (s *UpdateCampaignStatusService) Do(ctx context.Context, opts ...requestOpt
 		endpoint: fmt.Sprintf("/campaigns/%d/status", s.id),
 	}
 
-	r.setParam("status", s.status)
+	r.setFormParam("status", s.status)
 
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
