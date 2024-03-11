@@ -1,12 +1,11 @@
 package listmonk
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
-
-	"context"
 )
 
 type SubscriberList struct {
@@ -76,7 +75,7 @@ func (s *GetSubscribersService) Do(ctx context.Context, opts ...requestOption) (
 		r.setParam("query", *s.query)
 	}
 	if len(s.listIds) > 0 {
-		r.setParamList("list_id", s.listIds)
+		r.setParam("list_id", s.listIds)
 	}
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
@@ -509,7 +508,7 @@ func (s *DeleteSubscribersService) Do(ctx context.Context, opts ...requestOption
 		endpoint: "/subscribers",
 	}
 
-	r.setParamList("id", s.ids)
+	r.setParam("id", s.ids)
 
 	bytes, err := s.c.callAPI(ctx, r, opts...)
 
