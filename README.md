@@ -11,13 +11,13 @@ Make sure you have read listmonk API document before continuing.
 ### Installation
 
 ```shell
-go get github.com/Ezexchange-API/go-listmonk
+go get github.com/Exayn/go-listmonk
 ```
 
 ### Importing
 
 ```golang
 import (
-    listmonk "github.com/Ezexchange-API/go-listmonk"
+    listmonk "github.com/Exayn/go-listmonk"
 )
 ```

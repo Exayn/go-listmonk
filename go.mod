@@ -1,4 +1,4 @@
-module github.com/EzeXchange-API/go-listmonk
+module github.com/Exayn/go-listmonk
 
 go 1.19
 
