@@ -28,21 +28,19 @@ func (r *request) setParam(key string, value interface{}) *request {
 		r.query = url.Values{}
 	}
 
-	if reflect.TypeOf(value).Kind() == reflect.Slice {
-		v, err := json.Marshal(value)
-		if err == nil {
-			value = string(v)
+	if val := reflect.ValueOf(value); val.Kind() == reflect.Slice {
+		for i := 0; i < val.Len(); i++ {
+			v := fmt.Sprintf("%v", val.Index(i).Interface())
+			if i == 0 {
+				r.query.Set(key, fmt.Sprintf("%v", v))
+			} else {
+				r.query.Add(key, fmt.Sprintf("%v", v))
+			}
 		}
+		return r
 	}
 
 	r.query.Set(key, fmt.Sprintf("%v", value))
-	return r
-}
-
-func (r *request) setParamList(baseParam string, params ...interface{}) *request {
-	for index, value := range params {
-		r.setParam(fmt.Sprintf("%s[%d]", baseParam, index), value)
-	}
 	return r
 }
 
