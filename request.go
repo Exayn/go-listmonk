@@ -39,9 +39,9 @@ func (r *request) setParam(key string, value interface{}) *request {
 	return r
 }
 
-func (r *request) setParamList(baseParam string, params ...interface{}) *request {
-	for index, value := range params {
-		r.setParam(fmt.Sprintf("%s[%d]", baseParam, index), value)
+func (r *request) setParamList(baseParam string, params []uint) *request {
+	for _, value := range params {
+		r.setParam(baseParam, fmt.Sprintf("%d", value))
 	}
 	return r
 }
