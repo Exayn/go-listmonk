@@ -75,6 +75,12 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...requestOption)
 	return data, nil
 }
 
+func (c *Client) NewGetHealthService() *GetHealthService {
+	return &GetHealthService{
+		c: c,
+	}
+}
+
 func (c *Client) NewGetSubscribersService() *GetSubscribersService {
 	return &GetSubscribersService{
 		c: c,
